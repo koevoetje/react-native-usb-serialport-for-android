@@ -1,5 +1,6 @@
-import type { EventEmitter, EventSubscription } from 'react-native';
+import type { EventSubscription } from 'react-native';
 import UsbSerialportForAndroid from './native_module';
+import type EventEmitter from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
 const DataReceivedEvent = 'usbSerialPortDataReceived';
 
