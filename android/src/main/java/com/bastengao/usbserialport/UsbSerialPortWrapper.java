@@ -15,6 +15,7 @@ public class UsbSerialPortWrapper implements SerialInputOutputManager.Listener {
     private static final int WRITE_WAIT_MILLIS = 2000;
     private static final int READ_WAIT_MILLIS = 2000;
     private static final String DataReceivedEvent = "usbSerialPortDataReceived";
+    Logger logger = Logger.getLogger("READ FROM USB");
 
     private int deviceId;
     private UsbSerialPort port;
@@ -37,11 +38,13 @@ public class UsbSerialPortWrapper implements SerialInputOutputManager.Listener {
     }
 
     public void onNewData(byte[] data) {
+        Log.e("I scanned this", data);
         WritableMap event = Arguments.createMap();
         String hex = UsbSerialportForAndroidModule.bytesToHex(data);
         event.putInt("deviceId", this.deviceId);
         event.putString("data", hex);
         Log.d("usbserialport", hex);
+        Log.e("This is what it means", event);
         sender.sendEvent(DataReceivedEvent, event);
     }
 
