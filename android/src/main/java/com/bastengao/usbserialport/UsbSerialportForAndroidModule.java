@@ -139,15 +139,13 @@ public class UsbSerialportForAndroidModule extends ReactContextBaseJavaModule im
             return;
         }
 
-        if(usbManager.hasPermission(driver.getDevice())) {
-            UsbDeviceConnection connection = usbManager.openDevice(driver.getDevice());
-        } else {
-            UsbDeviceConnection connection = null;
-            promise.reject(CODE_PERMISSION_DENIED, "connection failed: permission denied");
-        }
-        
+        UsbDeviceConnection connection = usbManager.openDevice(driver.getDevice());
         if(connection == null) {
-            promise.reject(CODE_OPEN_FAILED, "connection failed: open failed");
+            if (!usbManager.hasPermission(driver.getDevice())) {
+                promise.reject(CODE_PERMISSION_DENIED, "connection failed: permission denied");
+            } else {
+                promise.reject(CODE_OPEN_FAILED, "connection failed: open failed");
+            }
             return;
         }
 
