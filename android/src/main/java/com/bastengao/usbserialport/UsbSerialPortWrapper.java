@@ -27,6 +27,8 @@ public class UsbSerialPortWrapper implements SerialInputOutputManager.Listener {
         this.port = port;
         this.sender = sender;
         this.ioManager = new SerialInputOutputManager(port, this);
+        ioManager.setReadTimeout(READ_WAIT_MILLIS);
+        ioManager.setWriteTimeout(WRITE_WAIT_MILLIS);
         ioManager.start();
     }
 
